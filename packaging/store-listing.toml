@@ -1,0 +1,51 @@
+# The copy the App Store listing is filled in from. Every line is a claim about
+# the code, so it lives here, is reviewed and committed like anything else, and
+# ship-appstore pushes it on every release. Edit here; do not edit the listing
+# in a browser.
+#
+# Limits, counted in characters: apple.name and apple.subtitle 30,
+# apple.promotional-text 170, apple.keywords 100 including the commas,
+# description 4,000, apple-review-notes 4,000.
+
+apple-review-notes = """
+Bogenplan shows the events in the calendars already on the iPhone, read through EventKit, laid out by the Sun's position instead of by the clock. It only displays: it does not create, change or delete events. It needs no account and no network connection.
+
+PERMISSIONS
+On first open, Bogenplan asks for full calendar access, because reading the day's events needs it; write-only access cannot read them. It then asks for approximate location while using the app, because solar noon, sunrise and sunset depend on where you are. Without either, it explains what it needs and shows nothing else.
+
+WHAT YOU WILL SEE
+A day runs from one solar midnight to the next and is drawn as a column in which every span has the same height: a hundred spans from solar midnight to sunrise, two hundred across the daylight, a hundred from sunset back to midnight. Daylight is the blue band in the middle, with the twilights shading into night above and below. A ring with a dot marks solar noon, the same ring without the dot marks solar midnight, and triangles pointing up and down mark sunrise and sunset. The labels along the left edge give positions in spans before or after noon or midnight, with the clock time at each quarter of the day. Events sit where the Sun will be when they happen, each with its range in spans and, unless turned off, in clock time. A gold line marks the present moment.
+
+WHAT TO TRY
+1. Swipe left or right to change days, or use the week strip at the bottom. Today returns to the present; the date at the top opens a calendar to jump to any day.
+2. Pinch the day to zoom; zoomed out, the whole day fits on the screen.
+3. Tap an event for its details: start and end in spans and clock time, its length, the quarter of the day it starts in, its location and notes. Open in Calendar shows it in Apple's Calendar app.
+4. The gear opens Settings: spans or kiloseconds, the precision of the numbers, whether clock times are shown, and which calendars appear.
+
+DATA
+Calendar data stays in the iPhone's calendar database and is read on the device. The approximate location is read on the device and kept in the app's storage. Nothing is sent anywhere. Privacy policy: https://excelano.com/legal/#bogenplan. Source code: https://github.com/excelano/bogenplan.
+"""
+
+[locales."en-us"]
+website = "https://github.com/excelano/bogenplan"
+support = "https://github.com/excelano/bogenplan"
+privacy = "https://excelano.com/legal/#bogenplan"
+description = """
+Bogenplan shows your calendar by the Sun. It reads the calendars already on your iPhone and lays out each day by where the Sun will be, so a meeting appears in the morning light, at sunset or after dark, wherever it falls this time of year.
+
+A day runs from one solar midnight to the next and is drawn as a column in which every span of the Sun's arc has the same height: a hundred spans from midnight to sunrise, two hundred across the daylight, a hundred from sunset back to midnight. Sunrise and sunset always sit at the same height, and solar noon is always in the middle. What moves with the seasons is your calendar. In Houston, a five o'clock meeting is mid-afternoon in June and just before sunset in December, and the day view shows it that way.
+
+The sky is drawn behind the day: daylight in the middle, civil, nautical and astronomical twilight shading into night above and below. Solar noon and midnight have their own symbols, and so do sunrise and sunset. Each event shows its start and end in spans before or after noon or midnight, and in clock time beside them, for the people who keep the clock. A gold line marks the present moment.
+
+Swipe between days, or use the week strip along the bottom. Jump back to today with a tap, or to any date from the calendar at the top. Pinch to zoom, from a close view of the hours ahead to the whole day on one screen. Tap an event for its details, its length in spans or kiloseconds, and the quarter of the day it starts in, and open it in Apple's Calendar app from there.
+
+In Settings, choose spans or kiloseconds, how precisely positions are shown, whether clock times appear, and which calendars are shown.
+
+Bogenplan displays your calendars; it does not create or change events. It uses Bogenzeit, an open standard for telling time by the Sun's arc. Your calendar data stays in your iPhone's calendar database and your approximate location stays on your iPhone. Bogenplan has no account, no network connection, no ads and no analytics.
+"""
+
+[locales."en-us".apple]
+name = "Bogenplan: Solar Calendar"
+subtitle = "Your calendar on the Sun's arc"
+promotional-text = "Your calendar laid out by the Sun: every day from solar midnight to solar midnight, with sunrise, noon and sunset fixed and your events falling where the light will be."
+keywords = "sunrise,sunset,daylight,solar,noon,schedule,planner,day,agenda,twilight,season,astronomy,sundial"

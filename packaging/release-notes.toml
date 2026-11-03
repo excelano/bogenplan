@@ -1,0 +1,10 @@
+# What this release tells the App Store it changed. The version is checked
+# against the release being cut, so notes left from last time stop the release
+# rather than reaching the listing.
+
+version = "0.1.0"
+
+[locales."en-us"]
+whats-new = """
+The first version: the calendars on your iPhone, each day laid out on the Sun's arc.
+"""

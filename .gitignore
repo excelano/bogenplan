@@ -1,0 +1,9 @@
+ship.toml
+.DS_Store
+xcuserdata/
+*.xcuserstate
+build/
+DerivedData/
+.build/
+Package.resolved
+/packaging/ios/screenshots/
