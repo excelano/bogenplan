@@ -64,6 +64,10 @@ enum Demo {
 
     private static let week: [Entry] = [
         Entry(weekdays: [4], start: nil, minutes: 0, title: "Ava's birthday", calendar: family),
+        Entry(weekdays: [5], start: nil, minutes: 0, title: "Grandpa visiting", calendar: family),
+        Entry(weekdays: [5], start: nil, minutes: 0, title: "Sam out of office", calendar: work),
+        Entry(weekdays: [5], start: nil, minutes: 0, title: "Payday", calendar: home),
+        Entry(weekdays: [5], start: nil, minutes: 0, title: "Recycling pickup", calendar: home),
         Entry(weekdays: [2, 4, 6], start: 6 * 60 + 30, minutes: 45, title: "Run", calendar: home, location: "Buffalo Bayou"),
         Entry(weekdays: weekdays, start: 9 * 60, minutes: 15, title: "Stand-up", calendar: work),
         Entry(weekdays: [2], start: 13 * 60, minutes: 60, title: "Client call", calendar: work),

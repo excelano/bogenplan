@@ -181,10 +181,13 @@ private struct EventBlock: View {
                 .foregroundStyle(Palette.line)
                 .lineLimit(range ? 2 : 1)
             if range {
-                HStack(spacing: 4) {
+                ViewThatFits(in: .horizontal) {
+                    HStack(spacing: 4) {
+                        PositionLabel(readout.position(at: event.startDate), style: .caption2)
+                        Text("–").font(.caption2).foregroundStyle(Palette.line)
+                        PositionLabel(readout.position(at: event.endDate), style: .caption2)
+                    }
                     PositionLabel(readout.position(at: event.startDate), style: .caption2)
-                    Text("–").font(.caption2).foregroundStyle(Palette.line)
-                    PositionLabel(readout.position(at: event.endDate), style: .caption2)
                 }
             }
             if civil {

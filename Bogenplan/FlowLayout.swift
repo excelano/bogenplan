@@ -7,10 +7,13 @@ import SwiftUI
 /// does not fit.
 struct FlowLayout: Layout {
     let spacing: CGFloat
+    var rowLimit: Int? = nil
 
     func sizeThatFits(proposal: ProposedViewSize, subviews: Subviews, cache: inout ()) -> CGSize {
         let frames = arrange(subviews, width: proposal.width ?? .infinity)
         let width = frames.map(\.maxX).max() ?? 0
+        let rows = Set(frames.map(\.minY)).count
+        if let rowLimit, rows > rowLimit { return CGSize(width: width, height: .infinity) }
         let height = frames.map(\.maxY).max() ?? 0
         return CGSize(width: width, height: height)
     }

@@ -13,7 +13,7 @@ struct DayPager: View {
     /// date further away moves the centre.
     private static let reach = 366
     private static let laneWidth: CGFloat = 200
-    private static let mostDays = 7
+    private static let weekLaneWidth: CGFloat = 150
 
     @AppStorage(SettingKey.scale) private var scale = Scale.standard.rawValue
     @AppStorage(SettingKey.precision) private var precision = Precision.standard.rawValue
@@ -53,7 +53,9 @@ struct DayPager: View {
 
     private func dayCount(width: CGFloat) -> Int {
         guard sizeClass == .regular else { return 1 }
-        return min(max(Int((width - DayColumn.gutter) / Self.laneWidth), 1), Self.mostDays)
+        let lanes = width - DayColumn.gutter
+        if lanes / 7 >= Self.weekLaneWidth { return 7 }
+        return min(max(Int(lanes / Self.laneWidth), 1), 4)
     }
 
     @ViewBuilder private func content(count: Int) -> some View {
@@ -191,6 +193,6 @@ private struct DateJumpSheet: View {
                 }
         }
         .tint(Palette.sun)
-        .presentationDetents([.medium, .large])
+        .presentationDetents([.large])
     }
 }

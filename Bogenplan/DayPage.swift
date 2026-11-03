@@ -105,7 +105,7 @@ struct DayPage: View {
                             civilEvent(.sunset, sunset)
                         }
                     }
-                    ForEach(column.allDay, id: \.self) { AllDayChip(event: $0, readout: readout) }
+                    AllDayStrip(events: column.allDay, readout: readout)
                 }
                 .padding(.horizontal, 6)
                 .padding(.vertical, 8)
@@ -136,12 +136,10 @@ struct DayPage: View {
     }
 
     private func allDayStrip(_ events: [EKEvent]) -> some View {
-        FlowLayout(spacing: 6) {
-            ForEach(events, id: \.self) { AllDayChip(event: $0, readout: readout) }
-        }
-        .frame(maxWidth: .infinity, alignment: .leading)
-        .padding(.horizontal)
-        .padding(.vertical, 6)
+        AllDayStrip(events: events, readout: readout)
+            .frame(maxWidth: .infinity, alignment: .leading)
+            .padding(.horizontal)
+            .padding(.vertical, 6)
     }
 
     /// Today opens at the present moment, other days at their first event,
@@ -156,6 +154,83 @@ struct DayPage: View {
             }.min() ?? 100
         }
         return max(0, CGFloat(target) * scale - 160)
+    }
+}
+
+private struct AllDayStrip: View {
+    let events: [EKEvent]
+    let readout: Readout
+
+    var body: some View {
+        ViewThatFits(in: .vertical) {
+            ForEach((0...events.count).reversed(), id: \.self) { shown in
+                FlowLayout(spacing: 6, rowLimit: 2) {
+                    ForEach(events.prefix(shown), id: \.self) { AllDayChip(event: $0, readout: readout) }
+                    if shown < events.count {
+                        MoreChip(events: events, hidden: events.count - shown, readout: readout)
+                    }
+                }
+            }
+        }
+    }
+}
+
+private struct MoreChip: View {
+    let events: [EKEvent]
+    let hidden: Int
+    let readout: Readout
+
+    @State private var showsList = false
+
+    var body: some View {
+        Text("+\(hidden) more")
+            .font(.caption.weight(.medium))
+            .foregroundStyle(Palette.label)
+            .lineLimit(1)
+            .padding(.horizontal, 10)
+            .padding(.vertical, 4)
+            .background(Palette.line.opacity(0.12), in: Capsule())
+            .onTapGesture { showsList = true }
+            .popover(isPresented: $showsList) {
+                AllDayList(events: events, readout: readout)
+                    .frame(idealWidth: 400, idealHeight: 600)
+            }
+            .accessibilityAddTraits(.isButton)
+    }
+}
+
+private struct AllDayList: View {
+    let events: [EKEvent]
+    let readout: Readout
+
+    @State private var selected: EKEvent?
+    @Environment(\.dismiss) private var dismiss
+
+    var body: some View {
+        if let selected {
+            EventDetailView(event: selected, readout: readout)
+        } else {
+            NavigationStack {
+                List(events, id: \.self) { event in
+                    Button { selected = event } label: {
+                        HStack(spacing: 8) {
+                            Circle()
+                                .fill(Color(cgColor: event.calendar.cgColor))
+                                .frame(width: 10, height: 10)
+                            Text(event.title ?? "")
+                                .foregroundStyle(Palette.line)
+                        }
+                    }
+                }
+                .navigationTitle("All day")
+                .navigationBarTitleDisplayMode(.inline)
+                .toolbar {
+                    ToolbarItem(placement: .topBarTrailing) {
+                        Button("Done") { dismiss() }
+                    }
+                }
+            }
+        }
     }
 }
 

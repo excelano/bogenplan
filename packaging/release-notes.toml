@@ -2,9 +2,9 @@
 # against the release being cut, so notes left from last time stop the release
 # rather than reaching the listing.
 
-version = "0.2.0"
+version = "0.2.1"
 
 [locales."en-us"]
 whats-new = """
-Bogenplan now runs on iPad, with as many days side by side as fit, their sunrises and sunsets lined up. Short events stay readable when zoomed out, and the whole day fills the screen at full zoom-out.
+On iPad in landscape, the whole week shows at once and swipes a week at a time, in step with the week strip. All-day events take at most two rows, with the rest behind a "more" button. The date picker opens to the full month, and events in narrow columns stay inside them.
 """
