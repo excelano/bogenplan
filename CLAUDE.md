@@ -14,6 +14,11 @@ as a new tag. The first version only displays: no creating, editing or deleting 
 `ship.toml` (gitignored) carries the API key xcremote signs with. Signing is automatic; the app
 uses no capabilities, so nothing is registered by hand in the developer portal.
 
+The app icons (light, dark, tinted) are drawn in `Icon/AppIcon.svg`, `Icon/AppIcon-dark.svg` and
+`Icon/AppIcon-tinted.svg`; change one there and render it into
+`Bogenplan/Assets.xcassets/AppIcon.appiconset/` with
+`rsvg-convert -w 1024 -h 1024 <svg> | magick - -alpha off -strip PNG24:<png>`.
+
 ## Rules
 
 The day view gives every span the same height, from the starting ○ to the ending ○ (spec §3.8),
