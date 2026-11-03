@@ -7,3 +7,4 @@ DerivedData/
 .build/
 Package.resolved
 /packaging/ios/screenshots/
+/target/

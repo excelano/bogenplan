@@ -1,6 +1,6 @@
 # Bogenplan — concept (draft)
 
-Bogenplan is a calendar for iPhone that shows the calendars the person already keeps,
+Bogenplan is a calendar for iPhone and iPad that shows the calendars the person already keeps,
 read through EventKit, in Bogenzeit: positions in spans or kiloseconds from solar noon
 (☉) and solar midnight (○), with sunrise (△) and sunset (▽) between. Apple Calendar
 is a good calendar and a useful point of comparison, but Bogenplan is not a copy of
@@ -47,8 +47,11 @@ kiloseconds from ○, a day of about 86.4 ks laid out evenly.
 
 ## Platform and data
 
-iPhone first, with iPad following from the same SwiftUI views; a watch app and
-widgets are later questions. Swift and SwiftUI, with a minimum iOS version chosen at
+iPhone and iPad from the same SwiftUI views. The iPhone shows one day; the iPad
+shows as many days as fit side by side, sharing one gutter of span marks, since
+every day puts sunrise, ☉ and sunset at the same heights, with each day's clock
+times for sunrise and sunset in its header. A watch app and widgets are later
+questions. Swift and SwiftUI, with a minimum iOS version chosen at
 the start (Tagbogen targets iOS 17, Blick iOS 18). Reading events needs full access
 (`requestFullAccessToEvents`, `NSCalendarsFullAccessUsageDescription`); write-only
 access cannot read the day.

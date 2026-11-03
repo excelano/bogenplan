@@ -5,51 +5,29 @@ import Bogenzeit
 import EventKit
 import SwiftUI
 
-/// One Bogenzeit day drawn top to bottom from ○ to ○, every span the same
-/// height, with the sky's light behind it and the events placed on it.
-struct DayColumn: View {
+enum DayColumn {
     static let standardPointsPerSpan = 4.0
     static let pointsPerSpanRange = 1.5...16.0
     static let gutter: CGFloat = 72
-    /// The mark steps, finest first, each with the least scale it is drawn
-    /// at; below them all, only the quarters are marked.
     static let markSteps: [(spans: Int, minimumPointsPerSpan: Double)] = [(10, 3.2), (25, 1.8)]
-    /// Room below the ending ○ for its label.
     static let footer: CGFloat = 40
 
+    static func marks(_ axis: DayAxis, pointsPerSpan: CGFloat) -> [DayAxis.Mark] {
+        let step = markSteps.first { pointsPerSpan >= $0.minimumPointsPerSpan }?.spans ?? 50
+        return axis.marks(every: step)
+    }
+
+    static func height(pointsPerSpan: CGFloat) -> CGFloat {
+        CGFloat(DayAxis.length) * pointsPerSpan + footer
+    }
+}
+
+struct DaySky: View {
     let axis: DayAxis
     let pointsPerSpan: CGFloat
-    let events: [EKEvent]
-    let readout: Readout
-    let onSelect: (EKEvent) -> Void
 
     var body: some View {
-        let placed = EventLayout.place(events, on: axis, minimumSpans: 24 / pointsPerSpan)
-        let step = Self.markSteps.first { pointsPerSpan >= $0.minimumPointsPerSpan }?.spans ?? 50
-        let marks = axis.marks(every: step)
-        ZStack(alignment: .topLeading) {
-            sky(marks)
-            ForEach(marks) { markLabel($0) }
-            GeometryReader { geometry in
-                let width = geometry.size.width - Self.gutter - 8
-                ForEach(placed) { item in
-                    let columnWidth = width / CGFloat(item.columns)
-                    EventBlock(event: item.event, readout: readout)
-                        .frame(width: columnWidth - 2, height: y(item.bottom) - y(item.top) - 1)
-                        .offset(x: Self.gutter + CGFloat(item.column) * columnWidth, y: y(item.top))
-                        .onTapGesture { onSelect(item.event) }
-                }
-            }
-            nowLine
-        }
-        .frame(height: y(DayAxis.length) + Self.footer)
-    }
-
-    private func y(_ position: Double) -> CGFloat {
-        CGFloat(position) * pointsPerSpan
-    }
-
-    private func sky(_ marks: [DayAxis.Mark]) -> some View {
+        let marks = DayColumn.marks(axis, pointsPerSpan: pointsPerSpan)
         Canvas { context, size in
             context.fill(Path(CGRect(origin: .zero, size: size)), with: .color(Palette.night))
             let bands: [(Solar.HalfArc, Color)] = [
@@ -72,9 +50,28 @@ struct DayColumn: View {
                 context.stroke(line, with: .color(Palette.majorTick.opacity(opacity)), lineWidth: 0.5)
             }
         }
+        .frame(height: DayColumn.height(pointsPerSpan: pointsPerSpan))
     }
 
-    private func markLabel(_ mark: DayAxis.Mark) -> some View {
+    private func y(_ position: Double) -> CGFloat {
+        CGFloat(position) * pointsPerSpan
+    }
+}
+
+struct SpanGutter: View {
+    let axis: DayAxis
+    let pointsPerSpan: CGFloat
+    let showsCivilTime: Bool
+
+    var body: some View {
+        ZStack(alignment: .topLeading) {
+            DaySky(axis: axis, pointsPerSpan: pointsPerSpan)
+            ForEach(DayColumn.marks(axis, pointsPerSpan: pointsPerSpan)) { label($0) }
+        }
+        .frame(width: DayColumn.gutter)
+    }
+
+    private func label(_ mark: DayAxis.Mark) -> some View {
         VStack(alignment: .leading, spacing: 1) {
             if mark.isQuarter {
                 PositionLabel(glyph: mark.glyph, number: mark.number, before: mark.before, style: .caption)
@@ -82,14 +79,42 @@ struct DayColumn: View {
                 PositionLabel(glyph: mark.glyph, number: mark.number, before: mark.before, style: .caption2,
                               color: Palette.label.opacity(0.7))
             }
-            if mark.isQuarter && readout.showsCivilTime {
+            if mark.isQuarter && showsCivilTime {
                 Text(mark.instant.formatted(date: .omitted, time: .shortened))
                     .font(.caption2.monospacedDigit())
                     .foregroundStyle(Palette.label)
             }
         }
         .padding(.leading, 8)
-        .offset(y: y(mark.position) + 3)
+        .offset(y: CGFloat(mark.position) * pointsPerSpan + 3)
+    }
+}
+
+struct DayLane: View {
+    let axis: DayAxis
+    let pointsPerSpan: CGFloat
+    let events: [EKEvent]
+    let readout: Readout
+
+    var body: some View {
+        let placed = EventLayout.place(events, on: axis, minimumSpans: 24 / pointsPerSpan)
+        ZStack(alignment: .topLeading) {
+            DaySky(axis: axis, pointsPerSpan: pointsPerSpan)
+            GeometryReader { geometry in
+                let width = geometry.size.width - 8
+                ForEach(placed) { item in
+                    let columnWidth = width / CGFloat(item.columns)
+                    EventBlock(event: item.event, readout: readout)
+                        .frame(width: columnWidth - 2, height: y(item.bottom) - y(item.top) - 1)
+                        .offset(x: CGFloat(item.column) * columnWidth, y: y(item.top))
+                }
+            }
+            nowLine
+        }
+    }
+
+    private func y(_ position: Double) -> CGFloat {
+        CGFloat(position) * pointsPerSpan
     }
 
     private var nowLine: some View {
@@ -104,8 +129,7 @@ struct DayColumn: View {
                         .fill(Palette.sun)
                         .frame(height: 1.5)
                 }
-                .padding(.leading, Self.gutter - 4)
-                .offset(y: y(axis.position(of: now)) - 4)
+                .offset(x: -4, y: y(axis.position(of: now)) - 4)
                 .allowsHitTesting(false)
                 .accessibilityHidden(true)
             }
@@ -117,25 +141,16 @@ private struct EventBlock: View {
     let event: EKEvent
     let readout: Readout
 
+    @State private var showsDetail = false
+
     var body: some View {
         let color = Color(cgColor: event.calendar.cgColor)
         HStack(alignment: .top, spacing: 0) {
             color.frame(width: 3)
-            VStack(alignment: .leading, spacing: 2) {
-                Text(event.title ?? "")
-                    .font(.caption.weight(.semibold))
-                    .foregroundStyle(Palette.line)
-                    .lineLimit(2)
-                HStack(spacing: 4) {
-                    PositionLabel(readout.position(at: event.startDate), style: .caption2)
-                    Text("–").font(.caption2).foregroundStyle(Palette.line)
-                    PositionLabel(readout.position(at: event.endDate), style: .caption2)
-                }
-                if readout.showsCivilTime {
-                    Text(civilRange)
-                        .font(.caption2.monospacedDigit())
-                        .foregroundStyle(Palette.label)
-                }
+            ViewThatFits(in: .vertical) {
+                details(range: true, civil: readout.showsCivilTime)
+                details(range: true, civil: false)
+                details(range: false, civil: false)
             }
             .padding(.horizontal, 5)
             .padding(.vertical, 3)
@@ -146,9 +161,38 @@ private struct EventBlock: View {
         .background(Palette.night.opacity(0.7))
         .clipShape(RoundedRectangle(cornerRadius: 4))
         .contentShape(Rectangle())
+        .onTapGesture { showsDetail = true }
+        .popover(isPresented: $showsDetail) {
+            EventDetailView(event: event, readout: readout)
+                .frame(idealWidth: 400, idealHeight: 600)
+        }
+        .onAppear {
+            if Demo.event == event.title { showsDetail = true }
+        }
         .accessibilityElement(children: .ignore)
         .accessibilityLabel("\(event.title ?? ""), \(readout.spokenRange(from: event.startDate, to: event.endDate))")
         .accessibilityAddTraits(.isButton)
+    }
+
+    private func details(range: Bool, civil: Bool) -> some View {
+        VStack(alignment: .leading, spacing: 2) {
+            Text(event.title ?? "")
+                .font(.caption.weight(.semibold))
+                .foregroundStyle(Palette.line)
+                .lineLimit(range ? 2 : 1)
+            if range {
+                HStack(spacing: 4) {
+                    PositionLabel(readout.position(at: event.startDate), style: .caption2)
+                    Text("–").font(.caption2).foregroundStyle(Palette.line)
+                    PositionLabel(readout.position(at: event.endDate), style: .caption2)
+                }
+            }
+            if civil {
+                Text(civilRange)
+                    .font(.caption2.monospacedDigit())
+                    .foregroundStyle(Palette.label)
+            }
+        }
     }
 
     private var civilRange: String {

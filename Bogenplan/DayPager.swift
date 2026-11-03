@@ -2,7 +2,6 @@
 // Built with AI assistance (Claude, Anthropic)
 
 import Bogenzeit
-import EventKit
 import SwiftUI
 
 /// The days side by side, swiped one at a time, opening on today.
@@ -13,19 +12,21 @@ struct DayPager: View {
     /// Days on either side of the centre that can be swiped to; going to a
     /// date further away moves the centre.
     private static let reach = 366
+    private static let laneWidth: CGFloat = 200
+    private static let mostDays = 7
 
     @AppStorage(SettingKey.scale) private var scale = Scale.standard.rawValue
     @AppStorage(SettingKey.precision) private var precision = Precision.standard.rawValue
     @AppStorage(SettingKey.showsCivilTime) private var showsCivilTime = true
     @AppStorage(SettingKey.pointsPerSpan) private var pointsPerSpan = DayColumn.standardPointsPerSpan
     @Environment(\.scenePhase) private var scenePhase
+    @Environment(\.horizontalSizeClass) private var sizeClass
 
     @State private var today: Int
     @State private var center: Int
     @State private var selection: Int
     @State private var showsSettings = false
     @State private var showsDatePicker = false
-    @State private var selectedEvent: SelectedEvent?
 
     init(place: Place, calendars: CalendarStore) {
         self.place = place
@@ -45,6 +46,17 @@ struct DayPager: View {
     }
 
     var body: some View {
+        GeometryReader { geometry in
+            content(count: dayCount(width: geometry.size.width))
+        }
+    }
+
+    private func dayCount(width: CGFloat) -> Int {
+        guard sizeClass == .regular else { return 1 }
+        return min(max(Int((width - DayColumn.gutter) / Self.laneWidth), 1), Self.mostDays)
+    }
+
+    @ViewBuilder private func content(count: Int) -> some View {
         let readout = Readout(
             place: place,
             scale: Scale(rawValue: scale) ?? .standard,
@@ -53,17 +65,15 @@ struct DayPager: View {
         )
         NavigationStack {
             VStack(spacing: 0) {
-                TabView(selection: $selection) {
-                    ForEach(days, id: \.self) { id in
-                        DayPage(day: CalendarDay(daysSinceEpoch: id), isToday: id == today, readout: readout,
-                                calendars: calendars, pointsPerSpan: $pointsPerSpan) {
-                            selectedEvent = SelectedEvent(event: $0)
-                        }
-                        .tag(id)
+                TabView(selection: page(count: count)) {
+                    ForEach(pageStarts(count: count), id: \.self) { start in
+                        DayPage(days: (start..<start + count).map { CalendarDay(daysSinceEpoch: $0) }, today: today,
+                                readout: readout, calendars: calendars, pointsPerSpan: $pointsPerSpan)
+                            .tag(start)
                     }
                 }
                 .tabViewStyle(.page(indexDisplayMode: .never))
-                .id(center)
+                .id("\(center) \(count)")
                 Divider()
                 WeekStrip(selection: $selection, today: today, days: days)
                     .id(center)
@@ -78,8 +88,7 @@ struct DayPager: View {
                 ToolbarItem(placement: .principal) {
                     Button { showsDatePicker = true } label: {
                         HStack(spacing: 4) {
-                            Text(CalendarDay(daysSinceEpoch: selection).civilInterval.start
-                                .formatted(.dateTime.weekday(.abbreviated).day().month(.wide)))
+                            Text(title(count: count))
                                 .font(.headline)
                                 .foregroundStyle(Palette.line)
                             Image(systemName: "chevron.down")
@@ -104,10 +113,6 @@ struct DayPager: View {
                 go(to: CalendarDay(civil: $0).daysSinceEpoch)
             }
         }
-        .sheet(item: $selectedEvent) { selected in
-            EventDetailView(event: selected.event, readout: readout)
-        }
-        .onAppear(perform: openDemoEvent)
         .onChange(of: scenePhase) { _, phase in
             guard phase == .active else { return }
             let now = Self.today(at: place)
@@ -117,12 +122,34 @@ struct DayPager: View {
         }
     }
 
-    private func openDemoEvent() {
-        guard let title = Demo.event else { return }
-        let axis = DayAxis(CalendarDay(daysSinceEpoch: selection), at: place)
-        if let event = calendars.events(from: axis.start, to: axis.end).first(where: { $0.title == title }) {
-            selectedEvent = SelectedEvent(event: event)
+    private func pageStart(of id: Int, count: Int) -> Int {
+        let origin = count == 7 ? CalendarDay(daysSinceEpoch: center).startOfWeek.daysSinceEpoch : center
+        let offset = id - origin
+        let page = offset >= 0 ? offset / count : -((count - 1 - offset) / count)
+        return origin + page * count
+    }
+
+    private func pageStarts(count: Int) -> [Int] {
+        Array(stride(from: pageStart(of: days.lowerBound, count: count), through: days.upperBound, by: count))
+    }
+
+    private func page(count: Int) -> Binding<Int> {
+        Binding {
+            pageStart(of: selection, count: count)
+        } set: { start in
+            let current = pageStart(of: selection, count: count)
+            guard start != current else { return }
+            selection = min(max(start + selection - current, days.lowerBound), days.upperBound)
         }
+    }
+
+    private func title(count: Int) -> String {
+        let first = CalendarDay(daysSinceEpoch: count == 1 ? selection : pageStart(of: selection, count: count))
+        guard count > 1 else {
+            return first.civilInterval.start.formatted(.dateTime.weekday(.abbreviated).day().month(.wide))
+        }
+        let last = first.adding(days: count - 1).civilInterval.start
+        return (first.civilInterval.start..<last).formatted(.interval.day().month(.wide))
     }
 
     private func go(to id: Int) {
@@ -133,12 +160,6 @@ struct DayPager: View {
     private static func today(at place: Place) -> Int {
         bogenzeitDay(of: Demo.now(.now), longitude: place.longitude).daysSinceEpoch
     }
-}
-
-private struct SelectedEvent: Identifiable {
-    let event: EKEvent
-
-    var id: ObjectIdentifier { ObjectIdentifier(event) }
 }
 
 private struct DateJumpSheet: View {

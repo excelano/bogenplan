@@ -2,9 +2,9 @@
 # against the release being cut, so notes left from last time stop the release
 # rather than reaching the listing.
 
-version = "0.1.0"
+version = "0.2.0"
 
 [locales."en-us"]
 whats-new = """
-The first version: the calendars on your iPhone, each day laid out on the Sun's arc.
+Bogenplan now runs on iPad, with as many days side by side as fit, their sunrises and sunsets lined up. Short events stay readable when zoomed out, and the whole day fills the screen at full zoom-out.
 """

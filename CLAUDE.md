@@ -1,6 +1,6 @@
 # CLAUDE.md
 
-Bogenplan is an iPhone calendar that shows the calendars on the device, read through EventKit, laid
+Bogenplan is an iPhone and iPad calendar that shows the calendars on the device, read through EventKit, laid
 out in Bogenzeit. `docs/concept.md` is the concept; the Bogenzeit spec in excelano/bogenzeit is
 normative. The engine, the display forms and the drawn glyphs come from the Swift package
 excelano/bogenzeit-swift, depended on by URL; a change to any of them is made there and released
