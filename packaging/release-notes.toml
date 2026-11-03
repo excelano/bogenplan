@@ -2,9 +2,9 @@
 # against the release being cut, so notes left from last time stop the release
 # rather than reaching the listing.
 
-version = "0.2.1"
+version = "0.2.2"
 
 [locales."en-us"]
 whats-new = """
-On iPad in landscape, the whole week shows at once and swipes a week at a time, in step with the week strip. All-day events take at most two rows, with the rest behind a "more" button. The date picker opens to the full month, and events in narrow columns stay inside them.
+A new app icon: a calendar page whose face is the day's sky, from night through the twilights to daylight, with the ring and dot of solar noon at its centre. It has its own dark and tinted versions for the Home Screen.
 """
