@@ -14,12 +14,12 @@ PERMISSIONS
 On first open, Bogenplan asks for full calendar access, because reading the day's events needs it; write-only access cannot read them. It then asks for approximate location while using the app, because solar noon, sunrise and sunset depend on where you are. Without either, it explains what it needs and shows nothing else.
 
 WHAT YOU WILL SEE
-A day runs from one solar midnight to the next and is drawn as a column in which every span has the same height: a hundred spans from solar midnight to sunrise, two hundred across the daylight, a hundred from sunset back to midnight. Daylight is the blue band in the middle, with the twilights shading into night above and below. A ring with a dot marks solar noon, the same ring without the dot marks solar midnight, and triangles pointing up and down mark sunrise and sunset. The labels along the left edge give positions in spans before or after noon or midnight, with the clock time at each quarter of the day. Events sit where the Sun will be when they happen, each with its range in spans and, unless turned off, in clock time. A gold line marks the present moment.
+A day runs from one solar midnight to the next and is drawn as a column in which every span has the same height: a hundred spans from solar midnight to sunrise, two hundred across the daylight, a hundred from sunset back to midnight. Daylight is the blue band in the middle, with the twilights shading into night above and below. A ring with a dot marks solar noon, the same ring without the dot marks solar midnight, and triangles pointing up and down mark sunrise and sunset. The labels along the left edge give positions in spans before or after noon or midnight, with the clock time at each eighth of the day. Events sit where the Sun will be when they happen, each with its range in spans and, unless turned off, in clock time. A gold line marks the present moment.
 
 WHAT TO TRY
 1. Swipe left or right to change days, or use the week strip at the bottom. Today returns to the present; the date at the top opens a calendar to jump to any day.
 2. Pinch the day to zoom; zoomed out, the whole day fits on the screen.
-3. Tap an event for its details: start and end in spans and clock time, its length, the quarter of the day it starts in, its location and notes. Open in Calendar shows it in Apple's Calendar app.
+3. Tap an event for its details: start and end in spans and clock time, its length, the eighth of the day it starts in, its location and notes. Open in Calendar shows it in Apple's Calendar app.
 4. On iPad, several days stand side by side and swipe together, sharing one scale of spans along the left edge; event details open in a popover.
 5. The gear opens Settings: spans or kiloseconds, the precision of the numbers, whether clock times are shown, and which calendars appear.
 
@@ -38,7 +38,7 @@ A day runs from one solar midnight to the next and is drawn as a column in which
 
 The sky is drawn behind the day: daylight in the middle, civil, nautical and astronomical twilight shading into night above and below. Solar noon and midnight have their own symbols, and so do sunrise and sunset. Each event shows its start and end in spans before or after noon or midnight, and in clock time beside them, for the people who keep the clock. A gold line marks the present moment.
 
-Swipe between days, or use the week strip along the bottom. Jump back to today with a tap, or to any date from the calendar at the top. Pinch to zoom, from a close view of the hours ahead to the whole day on one screen. Tap an event for its details, its length in spans or kiloseconds, and the quarter of the day it starts in, and open it in Apple's Calendar app from there.
+Swipe between days, or use the week strip along the bottom. Jump back to today with a tap, or to any date from the calendar at the top. Pinch to zoom, from a close view of the hours ahead to the whole day on one screen. Tap an event for its details, its length in spans or kiloseconds, and the eighth of the day it starts in, and open it in Apple's Calendar app from there.
 
 On iPad, as many days as fit sit side by side, sharing one scale of spans with their sunrises and sunsets lined up, so the shift of the light from one day to the next is plain to see. Each day's heading gives its sunrise and sunset in clock time and its all-day events.
 

@@ -16,8 +16,8 @@ struct DayAxis {
         var number: String? = nil
         var before = false
 
-        /// An anchor, a horizon event or a quarter boundary.
-        var isQuarter = true
+        /// An anchor, a horizon event or an eighth boundary.
+        var isEighthBoundary = true
 
         var id: Double { position }
     }
@@ -60,7 +60,7 @@ struct DayAxis {
         }
     }
 
-    /// A mark every `step` spans, the anchors, horizon events and quarter
+    /// A mark every `step` spans, the anchors, horizon events and eighth
     /// boundaries (spec §3.6) among them; on a polar day only ○, ☉ and ○.
     func marks(every step: Int) -> [Mark] {
         guard let sunrise = solar.sunrise, let sunset = solar.sunset, let halfDay = solar.halfDay else {
@@ -72,7 +72,7 @@ struct DayAxis {
         }
         return stride(from: 0, through: Int(Self.length), by: step).map { span in
             var mark = mark(at: span, sunrise: sunrise, sunset: sunset, halfDay: halfDay)
-            mark.isQuarter = span % 50 == 0
+            mark.isEighthBoundary = span % 50 == 0
             return mark
         }
     }

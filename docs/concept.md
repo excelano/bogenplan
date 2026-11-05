@@ -71,8 +71,8 @@ stays on the device. The privacy entry on excelano.com/legal and an App Privacy 
 ## Building blocks
 
 The engine is the Swift package excelano/bogenzeit-swift, depended on by URL from
-0.2.0 up to the next minor. `Bogenzeit` gives `Reading` (an instant's position,
-anchor, quarter and offset), `SolarDay` (noon, sunrise, sunset, the midnights,
+0.3.0 up to the next minor. `Bogenzeit` gives `Reading` (an instant's position,
+anchor, eighth and offset), `SolarDay` (noon, sunrise, sunset, the midnights,
 twilights), `Reading.placeInDay` (the 0 to 400 axis above), `SolarDuration` (spans
 and kiloseconds between two instants), and the display forms `DisplayedPosition`,
 `Scale` and `Precision`. `BogenzeitUI` draws ☉, ○, △ and ▽ from one SwiftUI
@@ -96,7 +96,7 @@ identifiers and are chosen once (`com.excelano.bogenplan` is the natural root).
 
 Creating and editing events, and planning against the Sun rather than the clock, are
 for after the first version. The ideas so far are placing an event by solar position
-("a walk at ☉ 30"), repeats anchored to sunrise or sunset, the eight quarters as
+("a walk at ☉ 30"), repeats anchored to sunrise or sunset, the eight eighths as
 planning blocks, and a week or month drawn as arcs side by side to show where the
 season is taking the days.
 

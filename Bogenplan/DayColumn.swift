@@ -46,7 +46,7 @@ struct DaySky: View {
                 var line = Path()
                 line.move(to: CGPoint(x: 0, y: y(mark.position)))
                 line.addLine(to: CGPoint(x: size.width, y: y(mark.position)))
-                let opacity = mark.number == nil ? 0.45 : mark.isQuarter ? 0.2 : 0.08
+                let opacity = mark.number == nil ? 0.45 : mark.isEighthBoundary ? 0.2 : 0.08
                 context.stroke(line, with: .color(Palette.majorTick.opacity(opacity)), lineWidth: 0.5)
             }
         }
@@ -73,13 +73,13 @@ struct SpanGutter: View {
 
     private func label(_ mark: DayAxis.Mark) -> some View {
         VStack(alignment: .leading, spacing: 1) {
-            if mark.isQuarter {
+            if mark.isEighthBoundary {
                 PositionLabel(glyph: mark.glyph, number: mark.number, before: mark.before, style: .caption)
             } else {
                 PositionLabel(glyph: mark.glyph, number: mark.number, before: mark.before, style: .caption2,
                               color: Palette.label.opacity(0.7))
             }
-            if mark.isQuarter && showsCivilTime {
+            if mark.isEighthBoundary && showsCivilTime {
                 Text(mark.instant.formatted(date: .omitted, time: .shortened))
                     .font(.caption2.monospacedDigit())
                     .foregroundStyle(Palette.label)

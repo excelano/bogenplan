@@ -32,8 +32,8 @@ struct EventDetailView: View {
                         instantRow("Starts", event.startDate)
                         instantRow("Ends", event.endDate)
                         LabeledContent("Length", value: readout.duration(from: event.startDate, to: event.endDate))
-                        if let quarter = readout.reading(at: event.startDate).quarter {
-                            LabeledContent("Starts in", value: quarter.name)
+                        if let eighth = readout.reading(at: event.startDate).eighth {
+                            LabeledContent("Starts in", value: eighth.name)
                         }
                     }
                 }
