@@ -8,7 +8,7 @@
 # description 4,000, apple-review-notes 4,000.
 
 apple-review-notes = """
-Bogenplan shows the events in the calendars already on the iPhone or iPad, read through EventKit, laid out by the Sun's position instead of by the clock. It only displays: it does not create, change or delete events. It needs no account and no network connection.
+Bogenplan shows the events in the calendars already on the iPhone or iPad, read through EventKit, laid out by the Sun's position instead of by the clock. The only events it creates are moments the person sets: zero-length events with an alert at their start. It does not change or delete events. It needs no account and no network connection.
 
 PERMISSIONS
 On first open, Bogenplan asks for full calendar access, because reading the day's events needs it; write-only access cannot read them. It then asks for approximate location while using the app, because solar noon, sunrise and sunset depend on where you are. Without either, it explains what it needs and shows nothing else.
@@ -21,7 +21,8 @@ WHAT TO TRY
 2. Pinch the day to zoom; zoomed out, the whole day fits on the screen.
 3. Tap an event for its details: start and end in spans and clock time, its length, the eighth of the day it starts in, its location and notes. Open in Calendar shows it in Apple's Calendar app.
 4. On iPad, several days stand side by side and swipe together, sharing one scale of spans along the left edge; event details open in a popover.
-5. The gear opens Settings: spans or kiloseconds, the precision of the numbers, whether clock times are shown, and which calendars appear.
+5. Press and hold an empty part of the day: a line shows the position there in spans, and the clock time unless turned off; slide to move it, let go to remove it. Hold still until the line turns gold, let go, and a sheet sets that moment precisely; Add saves it to the default calendar as a zero-length event with an alert at that moment.
+6. The gear opens Settings: spans or kiloseconds, the precision of the numbers, whether clock times are shown, and which calendars appear.
 
 DATA
 Calendar data stays in the device's calendar database and is read on the device. The approximate location is read on the device and kept in the app's storage. Nothing is sent anywhere. Privacy policy: https://excelano.com/legal/#bogenplan. Source code: https://github.com/excelano/bogenplan.
@@ -44,7 +45,9 @@ On iPad, as many days as fit sit side by side, sharing one scale of spans with t
 
 In Settings, choose spans or kiloseconds, how precisely positions are shown, whether clock times appear, and which calendars are shown.
 
-Bogenplan displays your calendars; it does not create or change events. It uses Bogenzeit, an open standard for telling time by the Sun's arc. Your calendar data stays in your device's calendar database and your approximate location stays on the device. Bogenplan has no account, no network connection, no ads and no analytics.
+Press and hold the day to read any moment on it, in spans and in clock time, and slide to move along the day. Hold still and let go to set that moment, a step at a time, and Bogenplan adds it to your calendar with an alert, so the reminder reaches your iPhone and Apple Watch when the Sun gets there.
+
+Bogenplan adds only the moments you set; it does not change or delete events. It uses Bogenzeit, an open standard for telling time by the Sun's arc. Your calendar data stays in your device's calendar database and your approximate location stays on the device. Bogenplan has no account, no network connection, no ads and no analytics.
 """
 
 [locales."en-us".apple]

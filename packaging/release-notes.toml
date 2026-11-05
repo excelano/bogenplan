@@ -2,9 +2,9 @@
 # against the release being cut, so notes left from last time stop the release
 # rather than reaching the listing.
 
-version = "0.2.2"
+version = "0.3.0"
 
 [locales."en-us"]
 whats-new = """
-A new app icon: a calendar page whose face is the day's sky, from night through the twilights to daylight, with the ring and dot of solar noon at its centre. It has its own dark and tinted versions for the Home Screen.
+Moments. Touch and hold an empty part of the day to see the Bogenzeit reading at that point, and the clock time too if Show civil time is on; slide to move it. Hold still until the line turns gold and let go to set a moment: dial in the exact reading at your scale and precision, and Bogenplan adds a zero-length event to your calendar with an alert at that instant. The eight named parts of the day are now called eighths, matching the Bogenzeit standard.
 """
