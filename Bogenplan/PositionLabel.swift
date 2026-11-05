@@ -48,6 +48,7 @@ struct PositionLabel: View {
     private static func baseRadius(_ style: Font.TextStyle) -> CGFloat {
         switch style {
         case .caption, .caption2, .footnote: 4.5
+        case .largeTitle: 13
         default: 6
         }
     }

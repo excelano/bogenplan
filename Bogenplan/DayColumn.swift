@@ -95,11 +95,16 @@ struct DayLane: View {
     let pointsPerSpan: CGFloat
     let events: [EKEvent]
     let readout: Readout
+    let calendars: CalendarStore
+
+    @State private var probe: MomentProbe?
+    @State private var draft: MomentDraft?
 
     var body: some View {
         let placed = EventLayout.place(events, on: axis, minimumSpans: 24 / pointsPerSpan)
         ZStack(alignment: .topLeading) {
             DaySky(axis: axis, pointsPerSpan: pointsPerSpan)
+                .gesture(ProbeGesture(onChange: track))
             GeometryReader { geometry in
                 let width = geometry.size.width - 8
                 ForEach(placed) { item in
@@ -110,6 +115,56 @@ struct DayLane: View {
                 }
             }
             nowLine
+            if let probe {
+                ProbeLine(probe: probe, instant: instant(at: probe.y), readout: readout)
+            }
+        }
+        .sensoryFeedback(.impact(weight: .light), trigger: probe != nil) { _, shown in shown }
+        .sensoryFeedback(.impact(weight: .heavy), trigger: probe?.armed == true) { _, armed in armed }
+        .sheet(item: $draft) { draft in
+            MomentSheet(instant: draft.instant, axis: axis, readout: readout, calendars: calendars)
+        }
+        .accessibilityAction(named: "Set a moment") {
+            let now = Demo.now(.now)
+            draft = MomentDraft(instant: axis.contains(now) ? now : axis.solar.noon)
+        }
+    }
+
+    private func instant(at y: CGFloat) -> Date {
+        axis.instant(at: Double(y / pointsPerSpan))
+    }
+
+    private func track(_ phase: ProbeGesture.Phase, _ point: CGPoint) {
+        let y = min(max(point.y, 0), CGFloat(DayAxis.length) * pointsPerSpan)
+        switch phase {
+        case .began:
+            let started = MomentProbe(y: y, still: point)
+            probe = started
+            arm(started.token)
+        case .moved:
+            guard var current = probe else { return }
+            current.y = y
+            if hypot(point.x - current.still.x, point.y - current.still.y) > 6 {
+                current.still = point
+                current.armed = false
+                current.token = UUID()
+                probe = current
+                arm(current.token)
+            } else {
+                probe = current
+            }
+        case .ended:
+            if let probe, probe.armed { draft = MomentDraft(instant: instant(at: probe.y)) }
+            probe = nil
+        case .cancelled:
+            probe = nil
+        }
+    }
+
+    private func arm(_ token: UUID) {
+        Task {
+            try? await Task.sleep(for: .milliseconds(500))
+            if probe?.token == token { probe?.armed = true }
         }
     }
 

@@ -54,7 +54,8 @@ struct DayPage: View {
                     SpanGutter(axis: columns[0].axis, pointsPerSpan: scale,
                                showsCivilTime: isSingle && readout.showsCivilTime)
                     ForEach(columns) { column in
-                        DayLane(axis: column.axis, pointsPerSpan: scale, events: column.events, readout: readout)
+                        DayLane(axis: column.axis, pointsPerSpan: scale, events: column.events, readout: readout,
+                                calendars: calendars)
                             .overlay(alignment: .leading) {
                                 if !isSingle { Palette.majorTick.opacity(0.25).frame(width: 0.5) }
                             }

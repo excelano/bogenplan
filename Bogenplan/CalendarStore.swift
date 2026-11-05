@@ -53,6 +53,21 @@ final class CalendarStore {
         UserDefaults.standard.set(Array(hiddenIDs), forKey: SettingKey.hiddenCalendars)
     }
 
+    var momentCalendar: EKCalendar? {
+        Demo.active ? nil : store.defaultCalendarForNewEvents
+    }
+
+    func addMoment(at instant: Date, title: String) throws {
+        guard let calendar = momentCalendar else { throw MomentError.noCalendar }
+        let event = EKEvent(eventStore: store)
+        event.title = title
+        event.startDate = instant
+        event.endDate = instant
+        event.calendar = calendar
+        event.addAlarm(EKAlarm(relativeOffset: 0))
+        try store.save(event, span: .thisEvent, commit: true)
+    }
+
     func events(from start: Date, to end: Date) -> [EKEvent] {
         let visible = calendars.filter(isVisible)
         guard !visible.isEmpty else { return [] }

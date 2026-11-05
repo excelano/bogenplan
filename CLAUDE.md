@@ -4,7 +4,8 @@ Bogenplan is an iPhone and iPad calendar that shows the calendars on the device,
 out in Bogenzeit. `docs/concept.md` is the concept; the Bogenzeit spec in excelano/bogenzeit is
 normative. The engine, the display forms and the drawn glyphs come from the Swift package
 excelano/bogenzeit-swift, depended on by URL; a change to any of them is made there and released
-as a new tag. The first version only displays: no creating, editing or deleting events.
+as a new tag. The only events Bogenplan creates are moments, zero-length events with an alert at
+their start, set from the day column; it does not edit or delete events.
 
 ## Commands
 

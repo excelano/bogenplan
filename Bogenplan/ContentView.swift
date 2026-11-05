@@ -35,7 +35,7 @@ struct ContentView: View {
         if calendars.access == .notDetermined {
             AccessGate(
                 title: "Your calendars",
-                message: "Bogenplan shows the calendars on this iPhone laid out on the Sun's arc. It reads them here and sends them nowhere.",
+                message: "Bogenplan shows the calendars on this iPhone laid out on the Sun's arc, and adds the moments you set to them. Your events stay here and are sent nowhere.",
                 actionTitle: "Allow Calendar Access"
             ) { calendars.requestAccess() }
         } else {

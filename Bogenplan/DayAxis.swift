@@ -47,6 +47,12 @@ struct DayAxis {
         return Self.length * instant.timeIntervalSince(start) / end.timeIntervalSince(start)
     }
 
+    func instant(at position: Double) -> Date {
+        let position = min(max(position, 0), Self.length)
+        if let instant = solar.instant(atPlace: position) { return instant }
+        return start.addingTimeInterval(end.timeIntervalSince(start) * position / Self.length)
+    }
+
     /// The part of the day in which the Sun stands above the altitude of
     /// `arc`, or nil when it never does.
     func extent(of arc: Solar.HalfArc) -> ClosedRange<Double>? {

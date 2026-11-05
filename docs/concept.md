@@ -10,13 +10,31 @@ and that is where the app can be inventive.
 The standard is defined in excelano/bogenzeit (`docs/bogenzeit-spec.md`, normative).
 Nothing here redefines it; where this document and the spec disagree, the spec wins.
 
-## The first version
+## What it does
 
-The first version only displays. It shows the events in the calendars on the device,
-lets the person move between days, jump to today, choose which calendars are shown,
-and open an event to see its details with its civil times. It does not create, edit
-or delete events, and does not answer invitations or set alerts. The question it
-answers is whether a day laid out in Bogenzeit is worth looking at.
+Bogenplan shows the events in the calendars on the device, lets the person move
+between days, jump to today, choose which calendars are shown, and open an event to
+see its details with its civil times. The one thing it writes is a moment. It does
+not edit or delete events, and does not answer invitations.
+
+## Moments
+
+Pressing and holding an empty part of a day draws a line across it with the reading
+at that point, and the civil time beside it when civil time is shown; sliding moves
+the line, and letting go removes it. This is also the converter between the clock
+and Bogenzeit. A quarter of a second's hold separates it from a scroll or a swipe
+between days: movement before then scrolls, movement after it moves the line.
+
+Holding still for another half second turns the line gold with a firmer tap, and
+letting go then opens a sheet to set the moment precisely, a step at a time at the
+scale and precision in Settings, or in civil time. Adding it saves a zero-length
+event to the default calendar for new events with an alert at its start. The alert
+is the calendar's own, so it reaches every device that has the calendar, the watch
+included, and needs nothing from Bogenplan afterwards. The instant is computed once,
+for where the person is when setting it, and rounded up to the whole second so that
+a calendar that drops fractions cannot show it a step early. Its default title is the
+reading in words, since a calendar shows titles in a font and the glyphs are drawn
+only in the app.
 
 ## The day on the arc
 
