@@ -28,8 +28,8 @@ Calendar data stays in the device's calendar database and is read on the device.
 """
 
 [locales."en-us"]
-website = "https://github.com/excelano/bogenplan"
-support = "https://github.com/excelano/bogenplan"
+website = "https://anderix.com/bogenplan/"
+support = "https://excelano.com/support/?app=Bogenplan&channel=App%20Store"
 privacy = "https://excelano.com/legal/#bogenplan"
 description = """
 Bogenplan shows your calendar by the Sun. It reads the calendars already on your iPhone or iPad and lays out each day by where the Sun will be, so a meeting appears in the morning light, at sunset or after dark, wherever it falls this time of year.
