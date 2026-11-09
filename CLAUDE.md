@@ -16,8 +16,8 @@ their start, set from the day column. Other events are changed or deleted in the
 `ship.toml` (gitignored) carries the API key xcremote signs with. Signing is automatic; the app
 uses no capabilities, so nothing is registered by hand in the developer portal.
 
-The app icons (light, dark, tinted) are drawn in `Icon/AppIcon.svg`, `Icon/AppIcon-dark.svg` and
-`Icon/AppIcon-tinted.svg`; change one there and render it into
+The app icon is drawn in `Icon/AppIcon.svg`, which renders both `icon-light.png` and
+`icon-dark.png`, and `Icon/AppIcon-tinted.svg`; change one there and render it into
 `Bogenplan/Assets.xcassets/AppIcon.appiconset/` with
 `rsvg-convert -w 1024 -h 1024 <svg> | magick - -alpha off -strip PNG24:<png>`.
 
