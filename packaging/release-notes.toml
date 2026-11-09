@@ -2,9 +2,9 @@
 # against the release being cut, so notes left from last time stop the release
 # rather than reaching the listing.
 
-version = "0.4.0"
+version = "0.4.1"
 
 [locales."en-us"]
 whats-new = """
-Edit and delete events. Tap an event, then Edit, to change it or delete it in the iPhone's own event editor: title, time, location, notes, calendar, alerts and repeats. For a repeating event, the editor asks whether the change is for this event only or for all future events. Events in calendars that can't be changed, such as subscribed calendars, have no Edit button. Bogenplan also has a new icon: a yellow sun on daytime blue.
+An event you delete or change now updates on the day straight away. Bogenplan checks your calendar accounts for changes each time it opens, and pulling down at the top of the day checks again. The icon keeps its yellow Sun on daytime blue in dark mode.
 """
