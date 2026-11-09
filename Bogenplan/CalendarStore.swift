@@ -53,6 +53,10 @@ final class CalendarStore {
         UserDefaults.standard.set(Array(hiddenIDs), forKey: SettingKey.hiddenCalendars)
     }
 
+    func editingStore(for event: EKEvent) -> EKEventStore? {
+        Demo.active || !event.calendar.allowsContentModifications ? nil : store
+    }
+
     var momentCalendar: EKCalendar? {
         Demo.active ? nil : store.defaultCalendarForNewEvents
     }

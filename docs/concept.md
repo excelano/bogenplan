@@ -14,8 +14,10 @@ Nothing here redefines it; where this document and the spec disagree, the spec w
 
 Bogenplan shows the events in the calendars on the device, lets the person move
 between days, jump to today, choose which calendars are shown, and open an event to
-see its details with its civil times. The one thing it writes is a moment. It does
-not edit or delete events, and does not answer invitations.
+see its details with its civil times. The one event it creates is a moment. From an
+event's details, Edit opens the system's event editor, where the event is changed or
+deleted; for a repeating event the editor asks whether the change is for this
+occurrence or for the ones after it. Bogenplan does not answer invitations.
 
 ## Moments
 
@@ -112,8 +114,8 @@ identifiers and are chosen once (`com.excelano.bogenplan` is the natural root).
 
 ## Later
 
-Creating and editing events, and planning against the Sun rather than the clock, are
-for after the first version. The ideas so far are placing an event by solar position
+Creating events other than moments, and planning against the Sun rather than the
+clock, are still to come. The ideas so far are placing an event by solar position
 ("a walk at ☉ 30"), repeats anchored to sunrise or sunset, the eight eighths as
 planning blocks, and a week or month drawn as arcs side by side to show where the
 season is taking the days.

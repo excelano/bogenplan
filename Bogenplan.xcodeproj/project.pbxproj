@@ -200,7 +200,7 @@
 				INFOPLIST_FILE = "Config/Bogenplan-Info.plist";
 				INFOPLIST_KEY_CFBundleDisplayName = "$(BOGENPLAN_DISPLAY_NAME)";
 				INFOPLIST_KEY_ITSAppUsesNonExemptEncryption = NO;
-				INFOPLIST_KEY_NSCalendarsFullAccessUsageDescription = "Bogenplan shows your events on the Sun's arc and adds the moments you set. Your events stay on this iPhone and are sent nowhere.";
+				INFOPLIST_KEY_NSCalendarsFullAccessUsageDescription = "Bogenplan shows your events on the Sun's arc, adds the moments you set and saves the changes you make to an event. Your events stay on this iPhone and are sent nowhere.";
 				INFOPLIST_KEY_NSLocationWhenInUseUsageDescription = "Bogenplan finds solar noon, sunrise and sunset where you are.";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
@@ -226,7 +226,7 @@
 				INFOPLIST_FILE = "Config/Bogenplan-Info.plist";
 				INFOPLIST_KEY_CFBundleDisplayName = "$(BOGENPLAN_DISPLAY_NAME)";
 				INFOPLIST_KEY_ITSAppUsesNonExemptEncryption = NO;
-				INFOPLIST_KEY_NSCalendarsFullAccessUsageDescription = "Bogenplan shows your events on the Sun's arc and adds the moments you set. Your events stay on this iPhone and are sent nowhere.";
+				INFOPLIST_KEY_NSCalendarsFullAccessUsageDescription = "Bogenplan shows your events on the Sun's arc, adds the moments you set and saves the changes you make to an event. Your events stay on this iPhone and are sent nowhere.";
 				INFOPLIST_KEY_NSLocationWhenInUseUsageDescription = "Bogenplan finds solar noon, sunrise and sunset where you are.";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;

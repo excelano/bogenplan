@@ -10,8 +10,8 @@ A day runs from one ○ to the next and every span has the same height, so
 sunrise, noon and sunset sit at fixed places and the events move with the
 season. On iPad, as many days as fit sit side by side and share one gutter of
 span marks, their horizons lined up. Pressing and holding the day reads any moment
-on it, and holding still sets that moment as a zero-length event with an alert;
-the app does not change or delete events.
+on it, and holding still sets that moment as a zero-length event with an alert.
+An event's details open the system's event editor, which changes or deletes it.
 `docs/concept.md` describes the design and what is still open.
 
 ## What is here

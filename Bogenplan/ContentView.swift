@@ -17,6 +17,7 @@ struct ContentView: View {
                 calendarGate
             } else if let place = Demo.active ? Demo.place : solarPlace.place {
                 DayPager(place: place, calendars: calendars)
+                    .environment(calendars)
             } else {
                 locationGate
             }
@@ -35,7 +36,7 @@ struct ContentView: View {
         if calendars.access == .notDetermined {
             AccessGate(
                 title: "Your calendars",
-                message: "Bogenplan shows the calendars on this iPhone laid out on the Sun's arc, and adds the moments you set to them. Your events stay here and are sent nowhere.",
+                message: "Bogenplan shows the calendars on this iPhone laid out on the Sun's arc, adds the moments you set to them, and saves the changes you make to an event. Your events stay here and are sent nowhere.",
                 actionTitle: "Allow Calendar Access"
             ) { calendars.requestAccess() }
         } else {

@@ -14,7 +14,7 @@ The latest release receives fixes. A security fix ships through `main` in a new 
 
 **Bogenplan has no network surface.** The app makes no network request, opens no socket and links no networking or analytics code.
 
-**Calendars are read, never written.** With permission, the app reads the device's calendars through EventKit while it is on screen. It keeps no copy of an event and cannot create, change or delete one.
+**Calendars are written only when you ask.** With permission, the app reads the device's calendars through EventKit while it is on screen, and keeps no copy of an event. It creates an event only when you set a moment, and changes or deletes one only when you save or delete it in the system's event editor.
 
 **Location is read only with permission and only while the app is on screen.** The coordinates in use are kept on the device; withdrawing the permission discards them.
 

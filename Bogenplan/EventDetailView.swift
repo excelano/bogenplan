@@ -8,7 +8,10 @@ struct EventDetailView: View {
     let event: EKEvent
     let readout: Readout
 
+    @Environment(CalendarStore.self) private var calendars
     @Environment(\.dismiss) private var dismiss
+    @State private var editing = false
+    @State private var revision = 0
     @Environment(\.openURL) private var openURL
 
     var body: some View {
@@ -50,15 +53,34 @@ struct EventDetailView: View {
                     }
                 }
             }
+            .id(revision)
             .navigationTitle("Event")
             .navigationBarTitleDisplayMode(.inline)
             .toolbar {
+                if calendars.editingStore(for: event) != nil {
+                    ToolbarItem(placement: .topBarLeading) {
+                        Button("Edit") { editing = true }
+                    }
+                }
                 ToolbarItem(placement: .topBarTrailing) {
                     Button("Done") { dismiss() }
                 }
             }
         }
         .tint(Palette.sun)
+        .sheet(isPresented: $editing) {
+            if let store = calendars.editingStore(for: event) {
+                EventEditor(event: event, store: store) { action in
+                    editing = false
+                    switch action {
+                    case .deleted: dismiss()
+                    case .saved: revision += 1
+                    default: break
+                    }
+                }
+                .ignoresSafeArea()
+            }
+        }
     }
 
     private func instantRow(_ title: String, _ instant: Date) -> some View {

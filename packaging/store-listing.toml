@@ -8,7 +8,7 @@
 # description 4,000, apple-review-notes 4,000.
 
 apple-review-notes = """
-Bogenplan shows the events in the calendars already on the iPhone or iPad, read through EventKit, laid out by the Sun's position instead of by the clock. The only events it creates are moments the person sets: zero-length events with an alert at their start. It does not change or delete events. It needs no account and no network connection.
+Bogenplan shows the events in the calendars already on the iPhone or iPad, read through EventKit, laid out by the Sun's position instead of by the clock. The only events it creates are moments the person sets: zero-length events with an alert at their start. An event's details have an Edit button that opens Apple's event editor, where the event can be changed or deleted. It needs no account and no network connection.
 
 PERMISSIONS
 On first open, Bogenplan asks for full calendar access, because reading the day's events needs it; write-only access cannot read them. It then asks for approximate location while using the app, because solar noon, sunrise and sunset depend on where you are. Without either, it explains what it needs and shows nothing else.
@@ -19,7 +19,7 @@ A day runs from one solar midnight to the next and is drawn as a column in which
 WHAT TO TRY
 1. Swipe left or right to change days, or use the week strip at the bottom. Today returns to the present; the date at the top opens a calendar to jump to any day.
 2. Pinch the day to zoom; zoomed out, the whole day fits on the screen.
-3. Tap an event for its details: start and end in spans and clock time, its length, the eighth of the day it starts in, its location and notes. Open in Calendar shows it in Apple's Calendar app.
+3. Tap an event for its details: start and end in spans and clock time, its length, the eighth of the day it starts in, its location and notes. Open in Calendar shows it in Apple's Calendar app. Edit opens Apple's event editor to change or delete it; an event in a calendar that cannot be written, such as a subscribed one, has no Edit.
 4. On iPad, several days stand side by side and swipe together, sharing one scale of spans along the left edge; event details open in a popover.
 5. Press and hold an empty part of the day: a line shows the position there in spans, and the clock time unless turned off; slide to move it, let go to remove it. Hold still until the line turns gold, let go, and a sheet sets that moment precisely; Add saves it to the default calendar as a zero-length event with an alert at that moment.
 6. The gear opens Settings: spans or kiloseconds, the precision of the numbers, whether clock times are shown, and which calendars appear.
@@ -39,7 +39,7 @@ A day runs from one solar midnight to the next and is drawn as a column in which
 
 The sky is drawn behind the day: daylight in the middle, civil, nautical and astronomical twilight shading into night above and below. Solar noon and midnight have their own symbols, and so do sunrise and sunset. Each event shows its start and end in spans before or after noon or midnight, and in clock time beside them, for the people who keep the clock. A gold line marks the present moment.
 
-Swipe between days, or use the week strip along the bottom. Jump back to today with a tap, or to any date from the calendar at the top. Pinch to zoom, from a close view of the hours ahead to the whole day on one screen. Tap an event for its details, its length in spans or kiloseconds, and the eighth of the day it starts in, and open it in Apple's Calendar app from there.
+Swipe between days, or use the week strip along the bottom. Jump back to today with a tap, or to any date from the calendar at the top. Pinch to zoom, from a close view of the hours ahead to the whole day on one screen. Tap an event for its details, its length in spans or kiloseconds, and the eighth of the day it starts in, and edit it or open it in Apple's Calendar app from there.
 
 On iPad, as many days as fit sit side by side, sharing one scale of spans with their sunrises and sunsets lined up, so the shift of the light from one day to the next is plain to see. Each day's heading gives its sunrise and sunset in clock time and its all-day events.
 
@@ -47,7 +47,7 @@ In Settings, choose spans or kiloseconds, how precisely positions are shown, whe
 
 Press and hold the day to read any moment on it, in spans and in clock time, and slide to move along the day. Hold still and let go to set that moment, a step at a time, and Bogenplan adds it to your calendar with an alert, so the reminder reaches your iPhone and Apple Watch when the Sun gets there.
 
-Bogenplan adds only the moments you set; it does not change or delete events. It uses Bogenzeit, an open standard for telling time by the Sun's arc. Your calendar data stays in your device's calendar database and your approximate location stays on the device. Bogenplan has no account, no network connection, no ads and no analytics.
+Bogenplan changes an event only when you edit it, and adds only the moments you set. It uses Bogenzeit, an open standard for telling time by the Sun's arc. Your calendar data stays in your device's calendar database and your approximate location stays on the device. Bogenplan has no account, no network connection, no ads and no analytics.
 """
 
 [locales."en-us".apple]
