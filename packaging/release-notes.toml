@@ -2,9 +2,9 @@
 # against the release being cut, so notes left from last time stop the release
 # rather than reaching the listing.
 
-version = "0.3.0"
+version = "0.4.0"
 
 [locales."en-us"]
 whats-new = """
-Moments. Touch and hold an empty part of the day to see the Bogenzeit reading at that point, and the clock time too if Show civil time is on; slide to move it. Hold still until the line turns gold and let go to set a moment: dial in the exact reading at your scale and precision, and Bogenplan adds a zero-length event to your calendar with an alert at that instant. The eight named parts of the day are now called eighths, matching the Bogenzeit standard.
+Edit and delete events. Tap an event, then Edit, to change it or delete it in the iPhone's own event editor: title, time, location, notes, calendar, alerts and repeats. For a repeating event, the editor asks whether the change is for this event only or for all future events. Events in calendars that can't be changed, such as subscribed calendars, have no Edit button. Bogenplan also has a new icon: a yellow sun on daytime blue.
 """
