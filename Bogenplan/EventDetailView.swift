@@ -11,7 +11,6 @@ struct EventDetailView: View {
     @Environment(CalendarStore.self) private var calendars
     @Environment(\.dismiss) private var dismiss
     @State private var editing = false
-    @State private var revision = 0
     @Environment(\.openURL) private var openURL
 
     var body: some View {
@@ -53,7 +52,7 @@ struct EventDetailView: View {
                     }
                 }
             }
-            .id(revision)
+            .id(calendars.storeChanges)
             .navigationTitle("Event")
             .navigationBarTitleDisplayMode(.inline)
             .toolbar {
@@ -72,11 +71,9 @@ struct EventDetailView: View {
             if let store = calendars.editingStore(for: event) {
                 EventEditor(event: event, store: store) { action in
                     editing = false
-                    switch action {
-                    case .deleted: dismiss()
-                    case .saved: revision += 1
-                    default: break
-                    }
+                    guard action != .canceled else { return }
+                    calendars.reload()
+                    if action == .deleted { dismiss() }
                 }
                 .ignoresSafeArea()
             }

@@ -62,6 +62,7 @@ struct DayPage: View {
                     }
                 }
             }
+            .refreshable { calendars.refresh() }
             .scrollPosition($scroll)
             .onScrollGeometryChange(for: CGFloat.self, of: { $0.contentOffset.y }) { _, y in offset = y }
             .onScrollGeometryChange(for: CGFloat.self, of: { $0.containerSize.height }) { _, height in visibleHeight = height }

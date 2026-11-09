@@ -11,6 +11,7 @@ final class CalendarStore {
     private(set) var access = EKEventStore.authorizationStatus(for: .event)
     private(set) var calendars: [EKCalendar] = []
     private(set) var hiddenIDs: Set<String>
+    private(set) var storeChanges = 0
 
     @ObservationIgnored private let store = EKEventStore()
 
@@ -25,7 +26,13 @@ final class CalendarStore {
         }
     }
 
+    func refresh() {
+        if !Demo.active { store.refreshSourcesIfNecessary() }
+        reload()
+    }
+
     func reload() {
+        storeChanges += 1
         if Demo.active {
             access = .fullAccess
             calendars = Demo.calendars
@@ -73,6 +80,7 @@ final class CalendarStore {
     }
 
     func events(from start: Date, to end: Date) -> [EKEvent] {
+        _ = storeChanges
         let visible = calendars.filter(isVisible)
         guard !visible.isEmpty else { return [] }
         if Demo.active { return Demo.events(from: start, to: end, in: visible) }
