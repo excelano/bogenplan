@@ -15,9 +15,9 @@ Nothing here redefines it; where this document and the spec disagree, the spec w
 Bogenplan shows the events in the calendars on the device, lets the person move
 between days, jump to today, choose which calendars are shown, and open an event to
 see its details with its civil times. The one event it creates is a moment. In an
-event's details, tapping its start or end opens a sheet that sets either a step at a
-time in Bogenzeit, with the same dial as a moment, or in civil time; moving the start
-keeps the event's length, and the end cannot go before the start. Edit opens the
+event's details, tapping its start or end opens a sheet that sets either by typing a
+reading or a step at a time in Bogenzeit, as a moment is set, or in civil time; moving the start
+keeps the event's length, and the end cannot go before the start. Edit Details opens the
 system's event editor, where everything else about the event is changed or the event
 is deleted. For a repeating event both ask whether the change is for this occurrence
 or for the ones after it. Bogenplan does not answer invitations.
@@ -31,8 +31,9 @@ and Bogenzeit. A quarter of a second's hold separates it from a scroll or a swip
 between days: movement before then scrolls, movement after it moves the line.
 
 Holding still for another half second turns the line gold with a firmer tap, and
-letting go then opens a sheet to set the moment precisely, a step at a time at the
-scale and precision in Settings, or in civil time. Adding it saves a zero-length
+letting go then opens a sheet to set the moment precisely, by typing a reading (a
+number, before or after, and ○, △, ☉ or ▽) or a step at a time at the scale and
+precision in Settings, or in civil time. Adding it saves a zero-length
 event to the default calendar for new events with an alert at its start. The alert
 is the calendar's own, so it reaches every device that has the calendar, the watch
 included, and needs nothing from Bogenplan afterwards. The instant is computed once,

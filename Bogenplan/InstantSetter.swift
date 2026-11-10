@@ -44,6 +44,7 @@ struct InstantSetter: View {
                 DatePicker("Time", selection: civilTime, displayedComponents: civilComponents)
             }
         } else {
+            ReadingEntry(instant: $instant, readout: readout)
             dial
         }
     }
