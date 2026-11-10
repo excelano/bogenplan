@@ -11,6 +11,7 @@ struct EventDetailView: View {
     @Environment(CalendarStore.self) private var calendars
     @Environment(\.dismiss) private var dismiss
     @State private var editing = false
+    @State private var retiming: EventTimeSheet.Edge?
     @Environment(\.openURL) private var openURL
 
     var body: some View {
@@ -31,8 +32,8 @@ struct EventDetailView: View {
                     if event.isAllDay {
                         LabeledContent("All day", value: allDayDates)
                     } else {
-                        instantRow("Starts", event.startDate)
-                        instantRow("Ends", event.endDate)
+                        instantRow("Starts", event.startDate, edge: .start)
+                        instantRow("Ends", event.endDate, edge: .end)
                         LabeledContent("Length", value: readout.duration(from: event.startDate, to: event.endDate))
                         if let eighth = readout.reading(at: event.startDate).eighth {
                             LabeledContent("Starts in", value: eighth.name)
@@ -67,6 +68,9 @@ struct EventDetailView: View {
             }
         }
         .tint(Palette.sun)
+        .sheet(item: $retiming) { edge in
+            EventTimeSheet(event: event, edge: edge, readout: readout, calendars: calendars)
+        }
         .sheet(isPresented: $editing) {
             if let store = calendars.editingStore(for: event) {
                 EventEditor(event: event, store: store) { action in
@@ -80,7 +84,19 @@ struct EventDetailView: View {
         }
     }
 
-    private func instantRow(_ title: String, _ instant: Date) -> some View {
+    @ViewBuilder private func instantRow(_ title: String, _ instant: Date, edge: EventTimeSheet.Edge) -> some View {
+        if calendars.editingStore(for: event) != nil {
+            Button { retiming = edge } label: {
+                instantContent(title, instant)
+            }
+            .tint(Palette.line)
+            .accessibilityHint("Set in Bogenzeit")
+        } else {
+            instantContent(title, instant)
+        }
+    }
+
+    private func instantContent(_ title: String, _ instant: Date) -> some View {
         LabeledContent {
             VStack(alignment: .trailing, spacing: 2) {
                 PositionLabel(readout.position(at: instant), style: .body)

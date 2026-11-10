@@ -2,9 +2,9 @@
 # against the release being cut, so notes left from last time stop the release
 # rather than reaching the listing.
 
-version = "0.4.1"
+version = "0.5.0"
 
 [locales."en-us"]
 whats-new = """
-An event you delete or change now updates on the day straight away. Bogenplan checks your calendar accounts for changes each time it opens, and pulling down at the top of the day checks again. The icon keeps its yellow Sun on daytime blue in dark mode.
+Set an event's start and end in Bogenzeit: tap Starts or Ends in its details and step it along the arc with the same dial as a moment, or set it in civil time. Moving the start keeps the event's length, and a repeating event asks whether the change is for this occurrence or for the ones after it. A change made in the event editor now shows on the day without waiting for your calendar account to sync.
 """

@@ -11,7 +11,8 @@ sunrise, noon and sunset sit at fixed places and the events move with the
 season. On iPad, as many days as fit sit side by side and share one gutter of
 span marks, their horizons lined up. Pressing and holding the day reads any moment
 on it, and holding still sets that moment as a zero-length event with an alert.
-An event's details open the system's event editor, which changes or deletes it.
+An event's start and end can be set in Bogenzeit from its details, and the system's
+event editor, opened from there, changes the rest or deletes it.
 `docs/concept.md` describes the design and what is still open.
 
 ## What is here

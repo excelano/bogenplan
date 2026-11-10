@@ -52,6 +52,18 @@ final class CalendarStore {
         reload()
     }
 
+    func retime(_ event: EKEvent, start: Date, end: Date, span: EKSpan) throws {
+        event.startDate = start
+        event.endDate = end
+        do {
+            try store.save(event, span: span, commit: true)
+        } catch {
+            event.rollback()
+            throw error
+        }
+        reload()
+    }
+
     func isVisible(_ calendar: EKCalendar) -> Bool {
         !hiddenIDs.contains(calendar.calendarIdentifier)
     }

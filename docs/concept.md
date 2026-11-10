@@ -14,10 +14,13 @@ Nothing here redefines it; where this document and the spec disagree, the spec w
 
 Bogenplan shows the events in the calendars on the device, lets the person move
 between days, jump to today, choose which calendars are shown, and open an event to
-see its details with its civil times. The one event it creates is a moment. From an
-event's details, Edit opens the system's event editor, where the event is changed or
-deleted; for a repeating event the editor asks whether the change is for this
-occurrence or for the ones after it. Bogenplan does not answer invitations.
+see its details with its civil times. The one event it creates is a moment. In an
+event's details, tapping its start or end opens a sheet that sets either a step at a
+time in Bogenzeit, with the same dial as a moment, or in civil time; moving the start
+keeps the event's length, and the end cannot go before the start. Edit opens the
+system's event editor, where everything else about the event is changed or the event
+is deleted. For a repeating event both ask whether the change is for this occurrence
+or for the ones after it. Bogenplan does not answer invitations.
 
 ## Moments
 

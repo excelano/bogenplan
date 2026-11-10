@@ -5,8 +5,9 @@ out in Bogenzeit. `docs/concept.md` is the concept; the Bogenzeit spec in excela
 normative. The engine, the display forms and the drawn glyphs come from the Swift package
 excelano/bogenzeit-swift, depended on by URL; a change to any of them is made there and released
 as a new tag. The only events Bogenplan creates are moments, zero-length events with an alert at
-their start, set from the day column. Other events are changed or deleted in the system's event editor
-(`EKEventEditViewController`), opened from an event's details.
+their start, set from the day column. An event's start and end are set in Bogenzeit from its details;
+everything else about it is changed, and it is deleted, in the system's event editor
+(`EKEventEditViewController`), opened from there too.
 
 ## Commands
 

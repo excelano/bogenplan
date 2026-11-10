@@ -24,6 +24,18 @@ struct Readout {
         SolarDuration(from: start, to: end, latitude: place.latitude, longitude: place.longitude).text(scale)
     }
 
+    func stepped(_ instant: Date, by steps: Int) -> Date {
+        let reading = reading(at: instant)
+        if scale == .spans, let place = reading.placeInDay {
+            let factor = pow(10, Double(precision.decimals(for: .spans)))
+            let target = ((place * factor).rounded() + Double(steps)) / factor
+            if let moved = reading.after(spans: target - place) { return moved.wholeSecond }
+        }
+        let step = pow(10, Double(3 - precision.decimals(for: .kiloseconds)))
+        let anchor = instant.addingTimeInterval(-reading.offset)
+        return anchor.addingTimeInterval(((reading.offset / step).rounded() + Double(steps)) * step).wholeSecond
+    }
+
     func spoken(_ position: DisplayedPosition) -> String {
         guard let number = position.number else { return position.glyph.name }
         let unit = position.unit == nil ? "spans" : "kiloseconds"
@@ -33,5 +45,11 @@ struct Readout {
 
     func spokenRange(from start: Date, to end: Date) -> String {
         "\(spoken(position(at: start))) to \(spoken(position(at: end)))"
+    }
+}
+
+extension Date {
+    var wholeSecond: Date {
+        Date(timeIntervalSince1970: (timeIntervalSince1970 + 0.001).rounded(.up))
     }
 }
