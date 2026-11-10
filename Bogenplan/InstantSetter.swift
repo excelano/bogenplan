@@ -1,6 +1,7 @@
 // Author: David M. Anderson
 // Built with AI assistance (Claude, Anthropic)
 
+import Bogenzeit
 import SwiftUI
 
 struct InstantSetter: View {
@@ -44,6 +45,9 @@ struct InstantSetter: View {
                 DatePicker("Time", selection: civilTime, displayedComponents: civilComponents)
             }
         } else {
+            if limits == nil {
+                DatePicker("Day", selection: chosenDay, displayedComponents: .date)
+            }
             ReadingEntry(instant: $instant, readout: readout)
             dial
         }
@@ -89,6 +93,20 @@ struct InstantSetter: View {
         .buttonStyle(.bordered)
         .buttonRepeatBehavior(.enabled)
         .accessibilityLabel(steps < 0 ? "Earlier" : "Later")
+    }
+
+    private var chosenDay: Binding<Date> {
+        Binding {
+            day(of: instant).civilInterval.start
+        } set: { picked in
+            let axis = DayAxis(day(of: instant), at: readout.place)
+            let moved = DayAxis(CalendarDay(civil: picked), at: readout.place)
+            instant = moved.instant(at: axis.position(of: instant)).wholeSecond
+        }
+    }
+
+    private func day(of instant: Date) -> CalendarDay {
+        bogenzeitDay(of: instant, longitude: readout.place.longitude)
     }
 
     private var civilTime: Binding<Date> {

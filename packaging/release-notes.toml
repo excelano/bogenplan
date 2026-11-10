@@ -2,9 +2,9 @@
 # against the release being cut, so notes left from last time stop the release
 # rather than reaching the listing.
 
-version = "0.5.1"
+version = "0.5.2"
 
 [locales."en-us"]
 whats-new = """
-Set an event's start and end in Bogenzeit: tap Starts or Ends in its details, then type a reading or step it along the arc with the dial, or set it in civil time. Moving the start keeps the event's length, and a repeating event asks whether the change is for this occurrence or for the ones after it. A moment's reading can be typed too. Edit is now Edit Details, and a change made there shows on the day without waiting for your calendar account to sync.
+Set an event's start and end in Bogenzeit: tap Starts or Ends in its details, then type a reading or step it along the arc with the dial, choose the day to move it to the same reading on another day, or set it in civil time. Moving the start keeps the event's length, and a repeating event asks whether the change is for this occurrence or for the ones after it. A moment's reading can be typed too. Edit is now Edit Details, and a change made there shows on the day without waiting for your calendar account to sync.
 """

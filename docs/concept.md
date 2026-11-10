@@ -16,7 +16,9 @@ Bogenplan shows the events in the calendars on the device, lets the person move
 between days, jump to today, choose which calendars are shown, and open an event to
 see its details with its civil times. The one event it creates is a moment. In an
 event's details, tapping its start or end opens a sheet that sets either by typing a
-reading or a step at a time in Bogenzeit, as a moment is set, or in civil time; moving the start
+reading or a step at a time in Bogenzeit, as a moment is set, with the Bogenzeit day
+chosen beside it to move the event to the same reading on another day, or in civil
+time; moving the start
 keeps the event's length, and the end cannot go before the start. Edit Details opens the
 system's event editor, where everything else about the event is changed or the event
 is deleted. For a repeating event both ask whether the change is for this occurrence
