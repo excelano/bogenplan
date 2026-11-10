@@ -59,7 +59,7 @@ struct EventDetailView: View {
             .toolbar {
                 if calendars.editingStore(for: event) != nil {
                     ToolbarItem(placement: .topBarLeading) {
-                        Button("Edit") { editing = true }
+                        Button("Edit Details") { editing = true }
                     }
                 }
                 ToolbarItem(placement: .topBarTrailing) {
@@ -87,7 +87,12 @@ struct EventDetailView: View {
     @ViewBuilder private func instantRow(_ title: String, _ instant: Date, edge: EventTimeSheet.Edge) -> some View {
         if calendars.editingStore(for: event) != nil {
             Button { retiming = edge } label: {
-                instantContent(title, instant)
+                HStack(spacing: 8) {
+                    instantContent(title, instant)
+                    Image(systemName: "chevron.right")
+                        .font(.footnote.weight(.semibold))
+                        .foregroundStyle(.tertiary)
+                }
             }
             .tint(Palette.line)
             .accessibilityHint("Set in Bogenzeit")
