@@ -72,7 +72,7 @@ struct EventDetailView: View {
                 EventEditor(event: event, store: store) { action in
                     editing = false
                     guard action != .canceled else { return }
-                    calendars.reload()
+                    calendars.edited(event)
                     if action == .deleted { dismiss() }
                 }
                 .ignoresSafeArea()

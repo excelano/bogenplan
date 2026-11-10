@@ -47,6 +47,11 @@ final class CalendarStore {
             .sorted { $0.title.localizedStandardCompare($1.title) == .orderedAscending }
     }
 
+    func edited(_ event: EKEvent) {
+        if !Demo.active { event.refresh() }
+        reload()
+    }
+
     func isVisible(_ calendar: EKCalendar) -> Bool {
         !hiddenIDs.contains(calendar.calendarIdentifier)
     }
