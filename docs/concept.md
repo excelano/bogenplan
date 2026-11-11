@@ -1,4 +1,4 @@
-# Bogenplan — concept (draft)
+# Bogenplan — concept
 
 Bogenplan is a calendar for iPhone and iPad that shows the calendars the person already keeps,
 read through EventKit, in Bogenzeit: positions in spans or kiloseconds from solar noon
@@ -53,15 +53,12 @@ only in the app.
 
 ## The day on the arc
 
-This is the starting design for the day view, to be tried and changed rather than
-settled in advance.
-
 A clock-time day view gives every hour the same height, so daylight is a band that
 grows and shrinks with the season and drifts against the grid. This view gives every
 span the same height instead. A Bogenzeit day runs from one ○ to the next and holds
 400 spans: 100 from ○ to sunrise, 200 across the Tagbogen, 100 from sunset to ○
 (spec §3.8, "place in the day"). Daylight therefore always fills the middle half of
-the column, sunrise and sunset sit at fixed heights, and ☉ is always at the centre.
+the column, sunrise and sunset sit at fixed heights, and ☉ is always at the center.
 What moves with the seasons is the events: in Houston a 17:00 meeting sits in the
 middle of the afternoon in June and just before sunset in December.
 
@@ -78,23 +75,30 @@ column.
 On a polar day or polar night there are no spans (spec §3.5). The axis falls back to
 kiloseconds from ○, a day of about 86.4 ks laid out evenly.
 
+At an even height per span a short event at high latitude would be a sliver, so
+the column scrolls and pinches to zoom, out as far as the whole day fitting the
+screen, and every event is drawn at least a minimum height. All-day events sit in a strip
+above the column. An event that crosses ○ is drawn in each day for the part of it
+that falls there. The edge of the column carries span marks, and civil times
+appear on the events when Show civil time is on in Settings.
+
 ## Platform and data
 
 iPhone and iPad from the same SwiftUI views. The iPhone shows one day; the iPad
 shows as many days as fit side by side, sharing one gutter of span marks, since
 every day puts sunrise, ☉ and sunset at the same heights, with each day's clock
-times for sunrise and sunset in its header. A watch app and widgets are later
-questions. Swift and SwiftUI, with a minimum iOS version chosen at
-the start (Tagbogen targets iOS 17, Blick iOS 18). Reading events needs full access
+times for sunrise and sunset in its header. Swift and SwiftUI; the project file
+names the minimum iOS version. Reading events needs full access
 (`requestFullAccessToEvents`, `NSCalendarsFullAccessUsageDescription`); write-only
 access cannot read the day.
 
-Location is the other input. Blick asks for approximate location only
-(`NSLocationDefaultAccuracyReduced`), reads it while the app is open, and keeps it on
-the device; Bogenplan should do the same, since the error of an approximate location
-moves solar noon and sunrise by tens of seconds at most, well under a span. Unlike
-Blick, Bogenzeit is the point of this app, so it needs an answer for someone who
-refuses location: a place entered by hand (a city or coordinates) is the obvious one.
+Location is the other input. Bogenplan asks for approximate location only
+(`NSLocationDefaultAccuracyReduced`), reads it while the app is open, and keeps the
+coordinates on the device, since the error of an approximate location moves solar
+noon and sunrise by tens of seconds at most, well under a span. There is one place,
+the latest fix, and every day, future ones included, is drawn at it. Without the
+permission the app explains what it needs instead of drawing a day, and withdrawing
+the permission discards the stored coordinates.
 
 The privacy posture follows the other Excelano apps: no backend, no analytics, no
 third-party SDKs, no network at all. Calendar data stays in EventKit and the location
@@ -103,8 +107,8 @@ stays on the device. The privacy entry on excelano.com/legal and an App Privacy 
 
 ## Building blocks
 
-The engine is the Swift package excelano/bogenzeit-swift, depended on by URL from
-0.3.0 up to the next minor. `Bogenzeit` gives `Reading` (an instant's position,
+The engine is the Swift package excelano/bogenzeit-swift, depended on by URL; the
+project file names the version range. `Bogenzeit` gives `Reading` (an instant's position,
 anchor, eighth and offset), `SolarDay` (noon, sunrise, sunset, the midnights,
 twilights), `Reading.placeInDay` (the 0 to 400 axis above), `SolarDuration` (spans
 and kiloseconds between two instants), and the display forms `DisplayedPosition`,
@@ -114,38 +118,10 @@ two anchors at matching sizes. Anything the calendar needs that is a property of
 standard (a new computation, a new form) goes into the spec and the Python reference
 first, then the package, so every app agrees.
 
-Blick's Bogenzeit setting is a working example of the location handling
-(`Blick/Services/SolarPlace.swift`) and of showing a Bogenzeit reading beside a civil
-time (`Blick/Views/MeetingTimeLabel.swift`). Tagbogen is the reference for how
-Bogenzeit looks on Apple platforms (`docs/tagbogen-spec.md`).
+Bogentag, whose face spec is in excelano/bogentag, is the reference for how
+Bogenzeit looks on Apple platforms.
 
-Releases go through the apps in excelano/shipping (`kind = "ios"`): a gitignored
-`ship.toml`, `shots-appstore`, `build-release`, `ship-appstore` to TestFlight.
-Development builds go through `xcremote` from this box to the Mac. The bundle
-identifier, App Group and anything else stored outside the app are persisted
-identifiers and are chosen once (`com.excelano.bogenplan` is the natural root).
-
-## Later
-
-Creating events other than moments, and planning against the Sun rather than the
-clock, are still to come. The ideas so far are placing an event by solar position
-("a walk at ☉ 30"), repeats anchored to sunrise or sunset, the eight eighths as
-planning blocks, and a week or month drawn as arcs side by side to show where the
-season is taking the days.
-
-## Open questions
-
-How much of the day fits on the screen at once, and whether the view scrolls or
-zooms: with every span the same height, a half-hour summer meeting at high latitude
-covers a few percent of the column.
-
-How all-day events, multi-day events and events that cross ○ are shown.
-
-Whether the edge of the day view carries civil hours, Bogenzeit positions or both,
-and whether that is a setting.
-
-What a refused location falls back to, whether a person can keep more than one place
-(travel, a second home), as the `bz` command does, and which place a future day is
-drawn at.
-
-The App Store name, which may not be free as plain "Bogenplan".
+Releases go through the apps in excelano/shipping, from a gitignored `ship.toml`;
+development builds go through `xcremote` from the Debian box to the Mac. The bundle
+identifier and anything else stored outside the app are persisted identifiers and do
+not change.
