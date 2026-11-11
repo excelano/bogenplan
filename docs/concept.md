@@ -14,7 +14,7 @@ Nothing here redefines it; where this document and the spec disagree, the spec w
 
 Bogenplan shows the events in the calendars on the device, lets the person move
 between days, jump to today, choose which calendars are shown, and open an event to
-see its details with its civil times. The one event it creates is a moment. In an
+see its details with its civil times. The one event it makes itself is a moment. In an
 event's details, tapping its start or end opens a sheet that sets either by typing a
 reading or a step at a time in Bogenzeit, as a moment is set, with the Bogenzeit day
 chosen beside it to move the event to the same reading on another day, or in civil
@@ -23,6 +23,13 @@ keeps the event's length, and the end cannot go before the start. Edit Details o
 system's event editor, where everything else about the event is changed or the event
 is deleted. For a repeating event both ask whether the change is for this occurrence
 or for the ones after it. Bogenplan does not answer invitations.
+
+The Linux desktop app also opens iCalendar files, so it can be the desktop's
+calendar application and take the invitations a mail client hands it. The file's
+events are shown in Bogenzeit and added to a calendar the person chooses, each as
+the person's own copy without its organizer and attendees, so the server sends
+nothing and the invitation stays unanswered. An event already in a calendar with
+the same UID is replaced, and a cancellation removes it.
 
 ## Moments
 
