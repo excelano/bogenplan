@@ -176,19 +176,40 @@ struct DayLane: View {
         TimelineView(.periodic(from: .now, by: 15)) { timeline in
             let now = Demo.now(timeline.date)
             if axis.contains(now) {
-                HStack(spacing: 0) {
-                    Circle()
-                        .fill(Palette.sun)
-                        .frame(width: 8, height: 8)
-                    Rectangle()
-                        .fill(Palette.sun)
-                        .frame(height: 1.5)
+                let lineY = y(axis.position(of: now))
+                ZStack(alignment: .topTrailing) {
+                    HStack(spacing: 0) {
+                        Circle()
+                            .fill(Palette.sun)
+                            .frame(width: 8, height: 8)
+                        Rectangle()
+                            .fill(Palette.sun)
+                            .frame(height: 1.5)
+                    }
+                    .offset(x: -4, y: lineY - 4)
+                    nowLabel(now)
+                        .offset(x: -8, y: max(0, lineY - 26))
                 }
-                .offset(x: -4, y: y(axis.position(of: now)) - 4)
                 .allowsHitTesting(false)
                 .accessibilityHidden(true)
             }
         }
+    }
+
+    private func nowLabel(_ now: Date) -> some View {
+        HStack(spacing: 6) {
+            PositionLabel(readout.position(at: now), style: .caption, weight: .semibold, color: Palette.sun)
+            if readout.showsCivilTime {
+                Text(now.formatted(date: .omitted, time: .shortened))
+                    .font(.caption.monospacedDigit())
+                    .foregroundStyle(Palette.label)
+            }
+        }
+        .padding(.horizontal, 8)
+        .padding(.vertical, 3)
+        .background(Palette.night.opacity(0.92), in: Capsule())
+        .overlay(Capsule().stroke(Palette.sun.opacity(0.4), lineWidth: 0.5))
+        .fixedSize()
     }
 }
 
